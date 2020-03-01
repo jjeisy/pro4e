@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="commonWidthVertical">320dp</dimen>
+    <dimen name="commonWidthHorizontal">580dp</dimen>
+
+    <dimen name="buttonRadius">4dp</dimen>
+    <dimen name="menuButtonTextSize">25sp</dimen>
+
+    <dimen name="questionTextSize">20sp</dimen>
+    <dimen name="optionsTextSize">20sp</dimen>
+</resources>
