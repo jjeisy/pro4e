@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="commonInitialColorEnd">#00665c</color>
+    <color name="commonInitialColorStart">#01bcab</color>
+    <color name="commonOperativeColorEnd">#363636</color>
+    <color name="commonOperativeColorStart">#027469</color>
+    <color name="buttonTextColor">#FFFFFFFF</color>
+
+    <color name="menuTitleColor">#FFFFFFFF</color>
+</resources>
