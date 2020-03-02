@@ -1,6 +1,6 @@
 *************************************************************************************************************************
 ***                                                                                                                   ***
-*** MPLAB Mindi Version 8.20h (x86) - 01.03.2020 17:48                                                                ***
+*** MPLAB Mindi Version 8.20h (x86) - 02.03.2020 20:30                                                                ***
 *** Platform: Windows 10                                                                                              ***
 *** Architecture: x64                                                                                                 ***
 *** Serial Number:                                                                                                    ***
@@ -22,20 +22,23 @@
 .options icres=0.002
 .options inhibitAttoISource=1
 #SIMETRIX
-X1 C3_P C1_P VCC 0 X1_out OPA172 pinnames: inp inn vsp vsn out
-V1 R1_N 0 5 Sin(0 1m 1k 0 0)
+X2 VCC C3_P C1_P VCC 0 X2_out OPA322S pinnames: EN inp inn vsp vsn out
 V2 VCC 0 5
 R1 VCC R1_N 5.6k
-R2 X1_out C1_P 68k
+R2 X2_out C1_P 68k
 R3 VCC C3_P 100k
 R4 C3_P 0 100k
-R5 VOUT 0 10k
+R5 C4_P 0 10k
+I1 R1_N 0 16u AC 1 0
 C1 C1_P R1_N 4.7u   
-C2 X1_out C1_P 15p   
+C2 X2_out C1_P 15p   
 C3 C3_P 0 3.3u   
-C4 VOUT X1_out 3.3u   
-.TRAN 5m
-.subckt OPA172 IN+ IN- VCC VEE OUT
+C4 C4_P X2_out 3.3u   
+.GRAPH C4_P curveLabel= VOUT nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe1  
+.GRAPH I1#N axisType="auto" persistence=-1 curveLabel="Imic" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true disabled=false 
+*.TRAN 0 5m 0 10u
+.AC DEC 100 1 100k
+.subckt OPA322S ENABLE IN+ IN- VCC VEE OUT
 ******************************************************
 * MODEL DEFINITIONS:
 .model BB_SW VSWITCH(Ron=50 Roff=1e12 Von=700e-3 Voff=0)
@@ -44,238 +47,266 @@ C4 VOUT X1_out 3.3u
 .model OR_SW VSWITCH(Ron=10e-3 Roff=1e9 Von=1e-3 Voff=0)
 .model R_NOISELESS RES(T_ABS=-273.15)
 ******************************************************
-V_GRp       57 MID 60
-V_GRn       58 MID -60
-V_ISCp      51 MID 75
-V_ISCn      52 MID -75
-V_ORn       32 VCLP -1.75
-V11         56 31 0
-V_ORp       30 VCLP 1.75
-V12         55 29 0
-V4          45 OUT 0
-VCM_MIN     79 VEE_B -100M
-VCM_MAX     80 VCC_B -2
-I_Q         VCC VEE 1.6M
-I_OS        38 MID 6P
-I_B         81 MID 8P
-V_OS        87 21 164.1U
-Xe_n        21 ESDp VNSE_0
-C15         22 23 568.4P  
-R55         23 22 R_NOISELESS 10K 
-R56         MID 22 R_NOISELESS 9.342 
-R54         MID 23 R_NOISELESS 1 
-G_adjust2   23 MID 24 MID  -1
-S11         ESDn ESDp ESDn ESDp  S_VSWITCH_1
-S10         ESDp ESDn ESDp ESDn  S_VSWITCH_2
-S5          VEE ESDp VEE ESDp  S_VSWITCH_3
-S4          VEE ESDn VEE ESDn  S_VSWITCH_4
-S2          ESDn VCC ESDn VCC  S_VSWITCH_5
-S3          ESDp VCC ESDp VCC  S_VSWITCH_6
-C28         25 MID 1P  
-R75         26 25 R_NOISELESS 100 
-C27         27 MID 1P  
-R72         28 27 R_NOISELESS 100 
-R74         MID 29 R_NOISELESS 1 
-G11         29 MID 30 MID  -1
-R73         31 MID R_NOISELESS 1 
-G10         31 MID 32 MID  -1
-R76         33 MID R_NOISELESS 1 
-XVCCS_LIM_ZO 34 MID MID 33 VCCS_LIM_ZO_0
-Xi_nn       ESDn MID FEMT_0
-Xi_np       MID 21 FEMT_0
-C25         35 MID 6.13F  
-R69         MID 35 R_NOISELESS 1MEG 
-G7          35 MID VSENSE MID  -1U
-C20         CLAMP MID 50.1N  
-R68         MID CLAMP R_NOISELESS 1MEG 
-XVCCS_LIM_2 36 MID MID CLAMP VCCS_LIM_2_0
-R44         MID 36 R_NOISELESS 1MEG 
-XVCCS_LIM_1 37 38 MID 36 VCCS_LIM_1_0
-R66         39 MID R_NOISELESS 1 
-G6          39 MID 40 MID  -1
-C23         41 MID 17.68P  
-R65         40 41 R_NOISELESS 10K 
-R64         40 42 R_NOISELESS 1.99MEG 
-C26         39 34 636.6F  
-R71         34 MID R_NOISELESS 2.5 
-R70         34 39 R_NOISELESS 10K 
-Rdc_1       42 MID R_NOISELESS 1 
-G4          42 MID 43 MID  -590
-C22         44 43 7.23U  
-R51         43 MID R_NOISELESS 16.9 
-R50         43 44 R_NOISELESS 10K 
-Rdummy      MID 45 R_NOISELESS 1.65K 
-Rx          45 33 R_NOISELESS 16.5K 
-Rdc1        44 MID R_NOISELESS 1 
-G_Aol_Zo    44 MID CL_CLAMP 45  -88
-R62         MID 46 R_NOISELESS 106.7 
-C21         46 47 4.974N  
-R63         47 46 R_NOISELESS 100MEG 
-G_adjust4   47 MID VEE_B MID  -937.5M
-Rsrc3       MID 47 R_NOISELESS 1 
-R57         MID 48 R_NOISELESS 148.1 
-C16         48 49 159.2P  
-R61         49 48 R_NOISELESS 100MEG 
-G_adjust3   49 MID VCC_B MID  -675M
-Rsrc2       MID 49 R_NOISELESS 1 
-R48         MID 24 R_NOISELESS 93.42K 
-C14         24 50 56.84F  
-R49         50 24 R_NOISELESS 100MEG 
-G_adjust1   50 MID ESDp MID  -1.071M
-Rsrc1       MID 50 R_NOISELESS 1 
-XIQp        VIMON MID MID VCC VCCS_LIMIT_IQ_0
-XIQn        MID VIMON VEE MID VCCS_LIMIT_IQ_0
-C_DIFF      ESDp ESDn 4P  
-XCL_AMP     51 52 VIMON MID 53 54 CLAMP_AMP_LO_0
-S8          CLAMP 55 CLAMP 55  S_VSWITCH_7
-S9          56 CLAMP 56 CLAMP  S_VSWITCH_8
-XGR_AMP     57 58 59 MID 60 61 CLAMP_AMP_HI_0
-R39         57 MID R_NOISELESS 1T 
-R37         58 MID R_NOISELESS 1T 
-R42         VSENSE 59 R_NOISELESS 1M 
-C19         59 MID 1F  
-R38         60 MID R_NOISELESS 1 
-R36         MID 61 R_NOISELESS 1 
-R40         60 62 R_NOISELESS 1M 
-R41         61 63 R_NOISELESS 1M 
-C17         62 MID 1F  
-C18         MID 63 1F  
-XGR_SRC     62 63 CLAMP MID VCCS_LIM_GR_0
-R35         53 MID R_NOISELESS 1 
-R21         MID 54 R_NOISELESS 1 
-R29         53 64 R_NOISELESS 1M 
-R30         54 65 R_NOISELESS 1M 
-C9          64 MID 1F  
-C8          MID 65 1F  
-XCL_SRC     64 65 CL_CLAMP MID VCCS_LIM_4_0
-R22         51 MID R_NOISELESS 1T 
-R20         MID 52 R_NOISELESS 1T 
-XCLAWp      VIMON MID 66 VCC_B VCCS_LIM_CLAW+_0
-XCLAWn      MID VIMON VEE_B 67 VCCS_LIM_CLAW-_0
-R19         66 VCC_B R_NOISELESS 1K 
-R16         66 68 R_NOISELESS 1M 
-R13         VEE_B 67 R_NOISELESS 1K 
-R17         69 67 R_NOISELESS 1M 
-C6          69 MID 1F  
-C5          MID 68 1F  
-G2          VCC_CLP MID 68 MID  -1M
+V_GRp       60 MID 54
+V_GRn       61 MID -56
+V_ISCp      54 MID 65
+V_ISCn      55 MID -70
+V_ORn       53 VCLP -1.06
+V11         59 52 0
+V_ORp       51 VCLP 1.06
+V12         58 50 0
+V4          24 OUT 0
+VCM_MIN     82 VEE_B -100M
+VCM_MAX     83 VCC_B 100M
+V_OS        90 IIBP 444.5U
+C_out       24 MID 10P 
+SRx         24 25 EN MID  S_VSWITCH_1
+SRdummy     MID 24 EN MID  S_VSWITCH_2
+XU2         ENABLE VCC VEE MID EN CNTL_0
+SW2         VEE ENABLE VEE ENABLE  S_VSWITCH_3
+SW1         ENABLE VCC ENABLE VCC  S_VSWITCH_4
+R69         EN MID R_NOISELESS 1 
+XU5         VCC VEE MID EN VCCS_IQ_W_EN_0
+XU7         26 MID 27 MID EN MID G2_ZO_0
+XU6         28 MID CL_CLAMP 24 EN MID G1_ZO_0
+XU3         29 MID MID CLAMP EN MID VCCS_LIM_2_EN_0
+XU9         VCC VEE EN MID MID N_IIBN IBIAS_ENABLE_N_0
+XU8         VCC VEE EN MID MID IIBP IBIAS_ENABLE_P_0
+Xi_nn       N_IIBN MID FEMT_0
+Xi_np       MID IIBP FEMT_0
+Xe_n        ESDp IIBP VNSE_0
+C23         30 MID 1F  
+R67         MID 30 R_NOISELESS 1MEG 
+GVCCS4      30 MID VSENSE MID  -1U
+C20         CLAMP MID 27.248N  
+XVCCS_LIM_1 31 32 MID 29 VCCS_LIM_1_0
+R66         MID CLAMP R_NOISELESS 1MEG 
+R44         MID 29 R_NOISELESS 1MEG 
+R65         25 MID R_NOISELESS 1 
+XVCCS_LIM_ZO 33 MID MID 25 VCCS_LIM_ZO_0
+R64         33 MID R_NOISELESS 204.1 
+C22         33 34 7.958F  
+R63         33 34 R_NOISELESS 10K 
+R62         34 MID R_NOISELESS 1 
+GVCCS3      34 MID 35 MID  -1
+C21         36 MID 19F  
+R61         35 36 R_NOISELESS 10K 
+R58         35 26 R_NOISELESS 125.3K 
+R57         26 MID R_NOISELESS 1 
+C16         28 27 39.79U  
+R51         27 MID R_NOISELESS 7.62K 
+R50         27 28 R_NOISELESS 10K 
+Rdc         28 MID R_NOISELESS 1 
+R56         MID 37 R_NOISELESS 1.058K 
+C15         37 38 3.009P 
+R55         38 37 R_NOISELESS 100MEG 
+GVCCS1      38 MID VEE_B MID  -954.2M
+R54         MID 38 R_NOISELESS 1 
+R80         MID 39 R_NOISELESS 1.058K 
+C14         39 40 3.009P 
+R79         40 39 R_NOISELESS 100MEG 
+G_adjust    40 MID VCC_B MID  -954.2M
+R78         MID 40 R_NOISELESS 1 
+R49         MID 41 R_NOISELESS 1 
+G_2         41 MID 42 MID  -555.6
+R2b         MID 42 R_NOISELESS 180.3K 
+C1b         42 43 17.68F 
+R1b         43 42 R_NOISELESS 100MEG 
+R48         MID 43 R_NOISELESS 1 
+GVCCS9      43 MID 44 MID  -1
+R2a         MID 44 R_NOISELESS 180.3K 
+C1a         44 45 17.68F 
+R1a         45 44 R_NOISELESS 100MEG 
+G_1         45 MID ESDp MID  -5.556M
+Rsrc        MID 45 R_NOISELESS 1 
+S5          VEE ESDp VEE ESDp  S_VSWITCH_5
+S4          VEE N_IIBN VEE N_IIBN  S_VSWITCH_6
+S2          N_IIBN VCC N_IIBN VCC  S_VSWITCH_7
+S3          ESDp VCC ESDp VCC  S_VSWITCH_8
+C28         46 MID 1P 
+R77         47 46 R_NOISELESS 100 
+C27         48 MID 1P 
+R76         49 48 R_NOISELESS 100 
+R75         MID 50 R_NOISELESS 1 
+GVCCS8      50 MID 51 MID  -1
+R74         52 MID R_NOISELESS 1 
+GVCCS7      52 MID 53 MID  -1
+XIQPos      VIMON MID MID VCC VCCS_LIMIT_IQ_0
+XIQNeg      MID VIMON VEE MID VCCS_LIMIT_IQ_0
+C_DIFF      ESDp N_IIBN 5P 
+XCL_AMP     54 55 VIMON MID 56 57 CLAMP_AMP_LO_0
+SOR_SWp     CLAMP 58 CLAMP 58  S_VSWITCH_9
+SOR_SWn     59 CLAMP 59 CLAMP  S_VSWITCH_10
+XGR_AMP     60 61 62 MID 63 64 CLAMP_AMP_HI_0
+R39         60 MID R_NOISELESS 1T 
+R37         61 MID R_NOISELESS 1T 
+R42         VSENSE 62 R_NOISELESS 1M 
+C19         62 MID 1F 
+R38         63 MID R_NOISELESS 1 
+R36         MID 64 R_NOISELESS 1 
+R40         63 65 R_NOISELESS 1M 
+R41         64 66 R_NOISELESS 1M 
+C17         65 MID 1F 
+C18         MID 66 1F 
+XGR_SRC     65 66 CLAMP MID VCCS_LIM_GR_0
+R21         56 MID R_NOISELESS 1 
+R20         MID 57 R_NOISELESS 1 
+R29         56 67 R_NOISELESS 1M 
+R30         57 68 R_NOISELESS 1M 
+C9          67 MID 1F 
+C8          MID 68 1F 
+XCL_SRC     67 68 CL_CLAMP MID VCCS_LIM_4_0
+R22         54 MID R_NOISELESS 1T 
+R19         MID 55 R_NOISELESS 1T 
+XCLAWp      VIMON MID 69 VCC_B VCCS_LIM_CLAWP_0
+XCLAWn      MID VIMON VEE_B 70 VCCS_LIM_CLAWN_0
+R12         69 VCC_B R_NOISELESS 1K 
+R16         69 71 R_NOISELESS 1M 
+R13         VEE_B 70 R_NOISELESS 1K 
+R17         72 70 R_NOISELESS 1M 
+C6          72 MID 1F 
+C5          MID 71 1F 
+G2          VCC_CLP MID 71 MID  -1M
 R15         VCC_CLP MID R_NOISELESS 1K 
-G3          VEE_CLP MID 69 MID  -1M
+G3          VEE_CLP MID 72 MID  -1M
 R14         MID VEE_CLP R_NOISELESS 1K 
-XCLAW_AMP   VCC_CLP VEE_CLP VOUT_S MID 70 71 CLAMP_AMP_LO_0
+XCLAW_AMP   VCC_CLP VEE_CLP VOUT_S MID 73 74 CLAMP_AMP_LO_0
 R26         VCC_CLP MID R_NOISELESS 1T 
 R23         VEE_CLP MID R_NOISELESS 1T 
-R25         70 MID R_NOISELESS 1 
-R24         MID 71 R_NOISELESS 1 
-R27         70 72 R_NOISELESS 1M 
-R28         71 73 R_NOISELESS 1M 
-C11         72 MID 1F  
-C10         MID 73 1F  
-XCLAW_SRC   72 73 CLAW_CLAMP MID VCCS_LIM_3_0
-H2          28 MID V11 -1
-H3          26 MID V12 1
-C12         SW_OL MID 1P  
-R32         74 SW_OL R_NOISELESS 100 
-R31         74 MID R_NOISELESS 1 
-XOL_SENSE   MID 74 27 25 OL_SENSE_0
-S1          44 43 SW_OL MID  S_VSWITCH_9
-H1          75 MID V4 1K
-S7          VEE OUT VEE OUT  S_VSWITCH_10
-S6          OUT VCC OUT VCC  S_VSWITCH_11
-R12         MID 76 R_NOISELESS 1T 
-R18         76 VOUT_S R_NOISELESS 100 
-C7          VOUT_S MID 10P  
-E5          76 MID OUT MID  1
-C13         VIMON MID 1N  
-R33         75 VIMON R_NOISELESS 100 
-R11         MID 75 R_NOISELESS 1T 
-R47         77 VCLP R_NOISELESS 100 
-C24         VCLP MID 1P  
-E4          77 MID CL_CLAMP MID  1
+R25         73 MID R_NOISELESS 1 
+R24         MID 74 R_NOISELESS 1 
+R27         73 75 R_NOISELESS 1M 
+R28         74 76 R_NOISELESS 1M 
+C11         75 MID 1F 
+C10         MID 76 1F 
+XCLAW_SRC   75 76 CLAW_CLAMP MID VCCS_LIM_3_0
+H2          49 MID V11 -1
+H3          47 MID V12 1
+C12         SW_OL MID 100P 
+R32         77 SW_OL R_NOISELESS 100 
+R31         77 MID R_NOISELESS 1 
+XOL_SENSE   MID 77 48 46 OL_SENSE_0
+S1          28 27 SW_OL MID  S_VSWITCH_11
+H1          78 MID V4 1K
+S7          VEE OUT VEE OUT  S_VSWITCH_12
+S6          OUT VCC OUT VCC  S_VSWITCH_13
+R11         MID 79 R_NOISELESS 1T 
+R18         79 VOUT_S R_NOISELESS 100 
+C7          VOUT_S MID 1N 
+E5          79 MID OUT MID  1
+C13         VIMON MID 1N 
+R33         78 VIMON R_NOISELESS 100 
+R10         MID 78 R_NOISELESS 1T 
+R47         80 VCLP R_NOISELESS 100 
+C24         VCLP MID 100P 
+E4          80 MID CL_CLAMP MID  1
 R46         MID CL_CLAMP R_NOISELESS 1K 
 G9          CL_CLAMP MID CLAW_CLAMP MID  -1M
 R45         MID CLAW_CLAMP R_NOISELESS 1K 
-G8          CLAW_CLAMP MID 35 MID  -1M
+G8          CLAW_CLAMP MID 30 MID  -1M
 R43         MID VSENSE R_NOISELESS 1K 
 G15         VSENSE MID CLAMP MID  -1M
-C4          37 MID 1F  
-R10         37 78 R_NOISELESS 1M 
-R9          MID 79 R_NOISELESS 1T 
-R7          80 MID R_NOISELESS 1T 
-R8          MID 78 R_NOISELESS 1 
-XVCM_CLAMP  81 MID 78 MID 80 79 VCCS_EXT_LIM_0
-E1          MID 0 82 0  1
+C4          31 MID 1F 
+R9          31 81 R_NOISELESS 1M 
+R7          MID 82 R_NOISELESS 1T 
+R6          83 MID R_NOISELESS 1T 
+R8          MID 81 R_NOISELESS 1 
+XVCM_CLAMP  84 MID 81 MID 83 82 VCCS_EXT_LIM_0
+E1          MID 0 85 0  1
 R89         VEE_B 0 R_NOISELESS 1 
-R6          83 VEE_B R_NOISELESS 1M 
-C3          83 0 1F  
-R60         82 83 R_NOISELESS 1MEG 
-C1          82 0 1  
-R5          82 0 R_NOISELESS 1T 
-R59         84 82 R_NOISELESS 1MEG 
-C2          84 0 1F  
-R4          VCC_B 84 R_NOISELESS 1M 
+R5          86 VEE_B R_NOISELESS 1M 
+C3          86 0 1F 
+R60         85 86 R_NOISELESS 1MEG 
+C1          85 0 1 
+R3          85 0 R_NOISELESS 1T 
+R59         87 85 R_NOISELESS 1MEG 
+C2          87 0 1F 
+R4          VCC_B 87 R_NOISELESS 1M 
 R88         VCC_B 0 R_NOISELESS 1 
 G17         VEE_B 0 VEE 0  -1
 G16         VCC_B 0 VCC 0  -1
-R67         85 81 R_NOISELESS 1K 
-G1          81 85 48 46  -1M
-R3          38 ESDn R_NOISELESS 1M 
-R2          85 86 R_NOISELESS 1M 
-R58         87 86 R_NOISELESS 1K 
-G5          86 87 22 MID  -1
-C_CMn       ESDn MID 4P  
-C_CMp       MID ESDp 4P  
-R53         ESDn MID R_NOISELESS 1T 
+R_PSR       88 84 R_NOISELESS 1K 
+G_PSR       84 88 39 37  -1M
+R2          32 N_IIBN R_NOISELESS 1M 
+R1          88 89 R_NOISELESS 1M 
+R_CMR       90 89 R_NOISELESS 1K 
+G_CMR       89 90 41 MID  -1M
+C_CMn       N_IIBN MID 4P 
+C_CMp       MID ESDp 4P 
+R53         N_IIBN MID R_NOISELESS 1T 
 R52         MID ESDp R_NOISELESS 1T 
-R1          IN- ESDn R_NOISELESS 250 
-R34         IN+ ESDp R_NOISELESS 250 
-.MODEL S_VSWITCH_1 VSWITCH (RON=50 ROFF=1T VON=700M VOFF=0)
-.MODEL S_VSWITCH_2 VSWITCH (RON=50 ROFF=1T VON=700M VOFF=0)
+R35         IN- N_IIBN R_NOISELESS 10M 
+R34         IN+ ESDp R_NOISELESS 10M 
+.MODEL S_VSWITCH_1 VSWITCH (RON=40K ROFF=1T VON=500M VOFF=400M)
+.MODEL S_VSWITCH_2 VSWITCH (RON=4K ROFF=7.8G VON=500M VOFF=400M)
 .MODEL S_VSWITCH_3 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=450M)
 .MODEL S_VSWITCH_4 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=450M)
-.MODEL S_VSWITCH_5 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=450M)
-.MODEL S_VSWITCH_6 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=450M)
-.MODEL S_VSWITCH_7 VSWITCH (RON=10M ROFF=1T VON=1M VOFF=0)
-.MODEL S_VSWITCH_8 VSWITCH (RON=10M ROFF=1T VON=1M VOFF=0)
-.MODEL S_VSWITCH_9 VSWITCH (RON=1M ROFF=1T VON=900M VOFF=800M)
-.MODEL S_VSWITCH_10 VSWITCH (RON=50 ROFF=1G VON=500M VOFF=100M)
-.MODEL S_VSWITCH_11 VSWITCH (RON=50 ROFF=1G VON=500M VOFF=100M)
-.ENDS OPA172
+.MODEL S_VSWITCH_5 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=100M)
+.MODEL S_VSWITCH_6 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=100M)
+.MODEL S_VSWITCH_7 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=100M)
+.MODEL S_VSWITCH_8 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=100M)
+.MODEL S_VSWITCH_9 VSWITCH (RON=10M ROFF=1T VON=10M VOFF=0)
+.MODEL S_VSWITCH_10 VSWITCH (RON=10M ROFF=1T VON=10M VOFF=0)
+.MODEL S_VSWITCH_11 VSWITCH (RON=1M ROFF=1T VON=500M VOFF=100M)
+.MODEL S_VSWITCH_12 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=100M)
+.MODEL S_VSWITCH_13 VSWITCH (RON=50 ROFF=1T VON=500M VOFF=100M)
+.ENDS OPA322S
 *
-.SUBCKT VNSE_0  1 2
-.PARAM FLW=1
-.PARAM NLF=170
-.PARAM NVR=6.2
-.PARAM GLF={PWR(FLW,0.25)*NLF/1164}
-.PARAM RNV={1.184*PWR(NVR,2)}
-.MODEL DVN D KF={PWR(FLW,0.5)/1E11} IS=1.0E-16
-I1 0 7 10E-3
-I2 0 8 10E-3
-D1 7 0 DVN
-D2 8 0 DVN
-E1 3 6 7 8 {GLF}
-R1 3 0 1E9
-R2 3 0 1E9
-R3 3 6 1E9
-E2 6 4 5 0 10
-R4 5 0 {RNV}
-R5 5 0 {RNV}
-R6 3 4 1E9
-R7 4 0 1E9
-E3 1 2 3 4 1
-.ENDS VNSE_0 
+.SUBCKT CNTL_0  EN_IN VCC VEE MID OUT
+.PARAM VSMAX = 6
+.PARAM VSMIN = 1.7
+.PARAM ENLH = 1
+E1 N1 MID VALUE = {IF(V(VCC,VEE)<=VSMAX & V(VCC,VEE)>=VSMIN & V(EN_IN,VEE)>=ENLH, 1, 0)}
+RS1 N1 N2 5K
+RS2 N1 N3 1.5K
+D1  N2 N3 DD
+C1  N2 MID 3N
+VREF NR MID 0.5
+GCOMP MID OUT VALUE = {0.5*(SGN(V(N2,NR)) - ABS(SGN(V(N2,NR))) + 2)}
+R1 N4 OUT 1M
+C2 OUT MID 1P
+.MODEL DD D RS=0.001 N = 0.001 
+.ENDS CNTL_0 
 *
-.SUBCKT VCCS_LIM_ZO_0  VC+ VC- IOUT+ IOUT-
-.PARAM GAIN = 4E3
-.PARAM IPOS = 3.5E3
-.PARAM INEG = -3.5E3
-G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VC+,VC-),INEG,IPOS)}
+.SUBCKT VCCS_IQ_W_EN_0  VCC VEE MID EN
+.PARAM IQ_EN = 1.6M
+.PARAM IQ_DIS = 0.1U
+G1 VCC VEE VALUE = {V(EN,MID)*IQ_EN + (1- V(EN,MID))*IQ_DIS}
+.ENDS
+*
+.SUBCKT G2_ZO_0  IOUTP IOUTN VINP VINN EN MID
+.PARAM GAIN = -2.31
+G1 IOUTP IOUTN VALUE = {GAIN*V(EN,MID)*V(VINP,VINN)}
+.ENDS
+*
+.SUBCKT G1_ZO_0  IOUTP IOUTN VINP VINN EN MID
+.PARAM GAIN = -181.82
+G1 IOUTP IOUTN VALUE = {GAIN*V(EN,MID)*V(VINP,VINN)}
+.ENDS
+*
+.SUBCKT VCCS_LIM_2_EN_0  VC+ VC- IOUT+ IOUT- EN MID
+.PARAM GAIN = 3.74E-2
+.PARAM IPOS = 0.280
+.PARAM INEG = -0.280
+G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(EN,MID)*V(VC+,VC-),INEG,IPOS)}
+.ENDS
+*
+.SUBCKT IBIAS_ENABLE_N_0  VCC VEE EN MID VIN IOUT
+.PARAM IIB_EN = 200F
+.PARAM IIB_DIS = 1F
+G1 IOUT MID VALUE = {V(EN,MID)*IIB_EN + (1 - V(EN,MID))*IIB_DIS}
+.ENDS
+*
+.SUBCKT IBIAS_ENABLE_P_0  VCC VEE EN MID VIN IOUT
+.PARAM IIB_EN = 200F
+.PARAM IIB_DIS = 1F
+G1 IOUT MID VALUE = {V(EN,MID)*IIB_EN + (1 - V(EN,MID))*IIB_DIS}
 .ENDS
 *
 .SUBCKT FEMT_0  1 2
 .PARAM FLWF=1E-3
-.PARAM NLFF=1.6
-.PARAM NVRF=1.6
+.PARAM NLFF=0.6
+.PARAM NVRF=0.6
 .PARAM GLFF={PWR(FLWF,0.25)*NLFF/1164}
 .PARAM RNVF={1.184*PWR(NVRF,2)}
 .MODEL DVNF D KF={PWR(FLWF,0.5)/1E11} IS=1.0E-16
@@ -293,19 +324,42 @@ R5 5 0 {RNVF}
 R6 3 4 1E9
 R7 4 0 1E9
 G1 1 2 3 4 1E-6
-.ENDS FEMT_0 
+.ENDS
 *
-.SUBCKT VCCS_LIM_2_0  VC+ VC- IOUT+ IOUT-
-.PARAM GAIN = 3.68E-2
-.PARAM IPOS = 0.50
-.PARAM INEG = -0.50
-G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VC+,VC-),INEG,IPOS)}
+.SUBCKT VNSE_0  1 2
+.PARAM FLW=10
+.PARAM NLF=55.5
+.PARAM NVR=7.11
+.PARAM GLF={PWR(FLW,0.25)*NLF/1164}
+.PARAM RNV={1.184*PWR(NVR,2)}
+.MODEL DVN D KF={PWR(FLW,0.5)/1E11} IS=1.0E-16
+I1 0 7 10E-3
+I2 0 8 10E-3
+D1 7 0 DVN
+D2 8 0 DVN
+E1 3 6 7 8 {GLF}
+R1 3 0 1E9
+R2 3 0 1E9
+R3 3 6 1E9
+E2 6 4 5 0 10
+R4 5 0 {RNV}
+R5 5 0 {RNV}
+R6 3 4 1E9
+R7 4 0 1E9
+E3 1 2 3 4 1
 .ENDS
 *
 .SUBCKT VCCS_LIM_1_0  VC+ VC- IOUT+ IOUT-
 .PARAM GAIN = 1E-4
 .PARAM IPOS = .5
 .PARAM INEG = -.5
+G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VC+,VC-),INEG,IPOS)}
+.ENDS
+*
+.SUBCKT VCCS_LIM_ZO_0  VC+ VC- IOUT+ IOUT-
+.PARAM GAIN = 50
+.PARAM IPOS = 6E3
+.PARAM INEG = -6E3
 G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VC+,VC-),INEG,IPOS)}
 .ENDS
 *
@@ -328,45 +382,51 @@ GVO- COM VO- VALUE = {IF(V(VIN,COM)<V(VC-,COM),((V(VC-,COM)-V(VIN,COM))*G),0)}
 *
 .SUBCKT VCCS_LIM_GR_0  VC+ VC- IOUT+ IOUT-
 .PARAM GAIN = 1
-.PARAM IPOS = 1.2
-.PARAM INEG = -1.2
+.PARAM IPOS = 600E-3
+.PARAM INEG = -600E-3
 G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VC+,VC-),INEG,IPOS)}
 .ENDS
 *
 .SUBCKT VCCS_LIM_4_0  VC+ VC- IOUT+ IOUT-
 .PARAM GAIN = 1
-.PARAM IPOS = 0.26
-.PARAM INEG = -0.26
+.PARAM IPOS = 220E-3
+.PARAM INEG = -220E-3
 G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VC+,VC-),INEG,IPOS)}
-.ENDS
+.ENDS VCCS_LIM_4_0 
 *
-.SUBCKT VCCS_LIM_CLAW+_0  VC+ VC- IOUT+ IOUT-
+.SUBCKT VCCS_LIM_CLAWP_0  VC+ VC- IOUT+ IOUT-
 G1 IOUT+ IOUT- TABLE {ABS(V(VC+,VC-))} =
 +(0, 1E-5)
-+(23.65, 7.53E-4)
-+(42.58, 1.14E-3)
-+(60.97, 2.42E-3)
-+(66.75, 2.87E-3)
-+(76, 4.81E-3)
-.ENDS
++(21.4339, 3.55E-4)
++(39.5385, 7.67E-4)
++(50.8008, 1.20E-3)
++(55.9294, 1.55E-3)
++(59.0736, 1.90E-3)
++(60.7526, 2.18E-3)
++(62.0000, 2.40E-3)
++(63.4085, 2.74E-3)
++(65.0000, 2.75E-3)
+.ENDS VCCS_LIM_CLAWP_0 
 *
-.SUBCKT VCCS_LIM_CLAW-_0  VC+ VC- IOUT+ IOUT-
+.SUBCKT VCCS_LIM_CLAWN_0  VC+ VC- IOUT+ IOUT-
 G1 IOUT+ IOUT- TABLE {ABS(V(VC+,VC-))} =
-+(0, 1E-5)
-+(22.15, 1.2E-4)
-+(40.77, 9.17E-4)
-+(53.66, 1.56E-3)
-+(67.77, 2.76E-3)
-+(72.74, 3.46E-3)
-+(76, 4.61E-3)
-.ENDS
++(0.0000, 1E-5)
++(9.8642, 1.31E-4)
++(21.4339, 3.16E-4)
++(39.5483, 6.51E-4)
++(50.8008, 9.00E-4)
++(60.7526, 1.21E-3)
++(63.0727, 1.31E-3)
++(67.8349, 1.59E-3)
++(70.4602, 1.96E-3)
+.ENDS VCCS_LIM_CLAWN_0 
 *
 .SUBCKT VCCS_LIM_3_0  VC+ VC- IOUT+ IOUT-
 .PARAM GAIN = 1
-.PARAM IPOS = 0.13
-.PARAM INEG = -0.13
+.PARAM IPOS = 108E-3
+.PARAM INEG = -108E-3
 G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VC+,VC-),INEG,IPOS)}
-.ENDS
+.ENDS VCCS_LIM_3_0 
 *
 .SUBCKT OL_SENSE_0  COM SW+ OLN  OLP
 GSW+ COM SW+ VALUE = {IF((V(OLN,COM)>10E-3 | V(OLP,COM)>10E-3),1,0)}
@@ -380,85 +440,25 @@ G1 IOUT+ IOUT- VALUE={LIMIT(GAIN*V(VIN+,VIN-),V(VP-,VIN-), V(VP+,VIN-))}
 
 ********************************************************************************
 ***                                                                          ***
-*** Starting Transient analysis at 17:48                                     ***
+*** Starting AC analysis at 20:30                                            ***
 ***                                                                          ***
-*** Analysis card: .TRAN 5m                                                  ***
-***                                                                          ***
-********************************************************************************
-********************************************************************************
-***                                                                          ***
-***                            Simulation Options                            ***
+*** Analysis card: .AC DEC 100 1 100k                                        ***
 ***                                                                          ***
 ********************************************************************************
-RELTOL                    0.001
-ABSTOL                    1e-12
-VNTOL                     1e-06
-POINTTOL                  0.001
-TEMPERATURE               27C
-GMIN                      1e-12
-Matrix Solver             UF KLU Version 1.1
 
-
-
-********************************************************************************
-***                                                                          ***
-***                             Device parameters                            ***
-***                                                                          ***
-********************************************************************************
-Model parameters for devices of type Switch
-===========================================
-Model:       X1.          X1.          X1.          X1.          X1.          
-             S_VSWITCH_1  S_VSWITCH_10 S_VSWITCH_11 S_VSWITCH_2  S_VSWITCH_3  
-
-roff         1T           1G           1G           1T           1T           
-ron          50           50           50           50           50           
-voff         0            100m         100m         0            450m         
-von          700m         500m         500m         700m         500m         
-
-Model:       X1.          X1.          X1.          X1.          X1.          
-             S_VSWITCH_4  S_VSWITCH_5  S_VSWITCH_6  S_VSWITCH_7  S_VSWITCH_8  
-
-roff         1T           1T           1T           1T           1T           
-ron          50           50           50           10m          10m          
-voff         450m         450m         450m         0            0            
-von          500m         500m         500m         1m           1m           
-
-Model:       X1.          
-             S_VSWITCH_9  
-
-roff         1T           
-ron          1m           
-voff         800m         
-von          900m         
-
-
-Model parameters for devices of type Resistor
-=============================================
-Model:       $Resistor    X1.          
-                          R_NOISELESS  
-
-t_abs        0            -273.15      
-
-
-Model parameters for devices of type Diode
-==========================================
-Model:       X1.Xe_n.DVN  X1.Xi_nn.    X1.Xi_np.    
-                          DVNF         DVNF         
-
-is           100a         100a         100a         
-kf           10p          316.227766f  316.227766f  
-
+*** ERROR *** The circuit is too large to simulate with this version.
+Too many analog nodes
 
 Analysis statistics
 ===================
 
 Nominal temperature = 27
 Operating temperature = 27
-Total iterations = 3285
-Transient iterations = 3279
-Transient timepoints = 418
-Accepted timepoints = 335
-Total analysis time = 0.156
+Total iterations = 0
+Transient iterations = 0
+Transient timepoints = 0
+Accepted timepoints = 0
+Total analysis time = 0
 Transient time = 0
 Matrix reordering time = 0
 L-U decomposition time = 0
@@ -471,20 +471,20 @@ Simulator initialise time = 0
 Data write time = 0
 Convergence test time = 0
 LTE time = 0
-JI2 Iterations = 6
+JI2 Iterations = 0
 Diag. GMIN stepping iterations = 0
 Junc. GMIN stepping iterations = 0
 Source stepping iterations = 0
 PTA iterations = 0
-Number of matrix fill ins = 42
-Number of initial matrix elements = 529
-Circuit equations = 134
-State vector size = 410
+Number of matrix fill ins = 0
+Number of initial matrix elements = 0
+Circuit equations = 143
+State vector size = 474
 Number of write buffer faults = 0
 
 Run statistics
 ==============
 
-Netlist read in time = 0.109
-Total run time = 0.297 seconds
-Analysis concluded 01.03.2020 17:48
+Netlist read in time = 0.156
+Total run time = 0.203 seconds
+Analysis concluded 02.03.2020 20:30

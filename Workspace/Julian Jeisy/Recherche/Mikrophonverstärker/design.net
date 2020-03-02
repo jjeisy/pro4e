@@ -1,16 +1,19 @@
 * F:\Daten\GitHub\pro4e\Workspace\Julian Jeisy\Recherche\Mikrophonverstärker\mikrophonverstärker.wxsch
 *#SIMETRIX
-X1 C3_P C1_P VCC 0 X1_out OPA172 pinnames: inp inn vsp vsn out
-V1 R1_N 0 5 Sin(0 1m 1k 0 0)
+X2 VCC C3_P C1_P VCC 0 X2_out OPA322S pinnames: EN inp inn vsp vsn out
 V2 VCC 0 5
 R1 VCC R1_N 5.6k
-R2 X1_out C1_P 68k
+R2 X2_out C1_P 68k
 R3 VCC C3_P 100k
 R4 C3_P 0 100k
-R5 VOUT 0 10k
+R5 C4_P 0 10k
+I1 R1_N 0 16u AC 1 0
 C1 C1_P R1_N 4.7u   
-C2 X1_out C1_P 15p   
+C2 X2_out C1_P 15p   
 C3 C3_P 0 3.3u   
-C4 VOUT X1_out 3.3u   
-.TRAN 5m
+C4 C4_P X2_out 3.3u   
+.GRAPH C4_P curveLabel= VOUT nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe1  
+.GRAPH I1#N axisType="auto" persistence=-1 curveLabel="Imic" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true disabled=false 
+*.TRAN 0 5m 0 10u
+.AC DEC 100 1 100k
 
