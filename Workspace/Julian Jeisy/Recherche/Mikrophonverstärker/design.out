@@ -1,6 +1,6 @@
 *************************************************************************************************************************
 ***                                                                                                                   ***
-*** MPLAB Mindi Version 8.20l (x86) - 02.03.2020 21:42                                                                ***
+*** MPLAB Mindi Version 8.20l (x86) - 03.03.2020 17:21                                                                ***
 *** Platform: Windows 7                                                                                               ***
 *** Architecture: x64                                                                                                 ***
 *** Serial Number:                                                                                                    ***
@@ -22,21 +22,24 @@
 .options icres=0.002
 .options inhibitAttoISource=1
 #SIMETRIX
+V1 V1_P 0 3.3
 X2 C3_P C1_P VCC 0 X2_out LMV796 pinnames: inp inn vsp vsn out
 V2 VCC 0 5
 R1 VCC R1_N 5.6k
 R2 X2_out C1_P 68k
 R3 VCC C3_P 100k
 R4 C3_P 0 100k
-R5 C4_P 0 10k
-I1 R1_N 0 16u AC 1 0
+R5 R6_N 0 100k
+R6 V1_P R6_N 100k
+I1 R1_N 0 16u AC 1 0 Sin(0 16u 1k 0 0)
 C1 C1_P R1_N 330n   
 C2 X2_out C1_P 100p   
 C3 C3_P 0 2.2u   
-C4 C4_P X2_out 33n   
-.GRAPH C4_P curveLabel= VOUT nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe1  
-*.TRAN 0 5m 0 10u
-.AC DEC 100 1 500k
+C4 R6_N X2_out 33n   
+.GRAPH R6_N curveLabel= VOUT nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe1  
+.GRAPH R1_N curveLabel= I1-pos nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe2  
+.TRAN 0 5m 0 10u
+*.AC DEC 100 1 500k
 .SUBCKT LMV796 3 4 6 2 1
 Q12 7 8 9 QP
 Q13 10 10 11 QP
@@ -187,9 +190,9 @@ R142 5 6 1E6
 
 ********************************************************************************
 ***                                                                          ***
-*** Starting AC analysis at 21:42                                            ***
+*** Starting Transient analysis at 17:21                                     ***
 ***                                                                          ***
-*** Analysis card: .AC DEC 100 1 500k                                        ***
+*** Analysis card: .TRAN 0 5m 0 10u                                          ***
 ***                                                                          ***
 ********************************************************************************
 ********************************************************************************
@@ -240,11 +243,11 @@ vaf          0            40           40           0
 
 Nominal temperature = 27
 Operating temperature = 27
-Total iterations = 285
-Transient iterations = 0
-Transient timepoints = 0
-Accepted timepoints = 0
-Total analysis time = 0.062
+Total iterations = 1312
+Transient iterations = 1027
+Transient timepoints = 511
+Accepted timepoints = 510
+Total analysis time = 0.078
 Transient time = 0
 Matrix reordering time = 0
 L-U decomposition time = 0
@@ -262,9 +265,9 @@ Diag. GMIN stepping iterations = 0
 Junc. GMIN stepping iterations = 0
 Source stepping iterations = 185
 PTA iterations = 0
-Number of matrix fill ins = -77
-Number of initial matrix elements = 378
-Circuit equations = 99
+Number of matrix fill ins = -83
+Number of initial matrix elements = 383
+Circuit equations = 101
 State vector size = 1078
 Number of write buffer faults = 0
 
@@ -272,5 +275,5 @@ Run statistics
 ==============
 
 Netlist read in time = 0
-Total run time = 0.109 seconds
-Analysis concluded 02.03.2020 21:42
+Total run time = 0.171 seconds
+Analysis concluded 03.03.2020 17:21

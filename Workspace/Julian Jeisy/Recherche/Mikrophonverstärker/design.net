@@ -1,18 +1,21 @@
 * D:\Daten\GitHub\pro4e\Workspace\Julian Jeisy\Recherche\Mikrophonverstärker\mikrophonverstärker.wxsch
 *#SIMETRIX
+V1 V1_P 0 3.3
 X2 C3_P C1_P VCC 0 X2_out LMV796 pinnames: inp inn vsp vsn out
 V2 VCC 0 5
 R1 VCC R1_N 5.6k
 R2 X2_out C1_P 68k
 R3 VCC C3_P 100k
 R4 C3_P 0 100k
-R5 C4_P 0 10k
-I1 R1_N 0 16u AC 1 0
+R5 R6_N 0 100k
+R6 V1_P R6_N 100k
+I1 R1_N 0 16u AC 1 0 Sin(0 16u 1k 0 0)
 C1 C1_P R1_N 330n   
 C2 X2_out C1_P 100p   
 C3 C3_P 0 2.2u   
-C4 C4_P X2_out 33n   
-.GRAPH C4_P curveLabel= VOUT nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe1  
-*.TRAN 0 5m 0 10u
-.AC DEC 100 1 500k
+C4 R6_N X2_out 33n   
+.GRAPH R6_N curveLabel= VOUT nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe1  
+.GRAPH R1_N curveLabel= I1-pos nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe2  
+.TRAN 0 5m 0 10u
+*.AC DEC 100 1 500k
 
