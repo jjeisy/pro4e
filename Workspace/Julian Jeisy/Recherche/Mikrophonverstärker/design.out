@@ -1,6 +1,6 @@
 *************************************************************************************************************************
 ***                                                                                                                   ***
-*** SIMetrix/SIMPLIS Elite Version 8.30f (x64) - 14.03.2020 21:22                                                     ***
+*** SIMetrix/SIMPLIS Elite Version 8.30f (x64) - 15.03.2020 17:34                                                     ***
 *** Platform: Windows 7                                                                                               ***
 *** Architecture: x64                                                                                                 ***
 *** Serial Number: SX805659                                                                                           ***
@@ -35,12 +35,12 @@ R5 R6_N 0 100k
 R6 3V3 R6_N 100k
 R7 X1_inn C4_P 4.7k
 R8 R8_P X1_inn 330k
-I1 R1_N 0 360u AC 160n 0 Sin(0 160n 1k 0 0)
+I1 R1_N 0 160n AC 160n 0 Sin(0 160n 1k 0 0)
 C1 R1_N X2_inn 1u   
 C2 C2_P X2_inn 100p   
 C3 VCC/2 0 2.2u   
 C4 C4_P C2_P 1u   
-C5 R6_N R8_P 100n   
+C5 R6_N R8_P 1u   
 .GRAPH R6_N axisType="owngrid" persistence=-1 curveLabel="VOUT" analysis="tran|ac|dc" xLog="lin" yLog="lin" yMin=0 yMax=3.5  nowarn=true disabled=false PROBEREF=Probe1  
 .GRAPH C1#P axisType="auto" persistence=-1 curveLabel="Iin" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true disabled=false 
 .GRAPH C2_P axisType="owngrid" persistence=-1 curveLabel="op1" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe3  
@@ -194,41 +194,45 @@ R142 5 6 1E6
 .MODEL PEN PMOS KP=200U VTO=-0.5 IS=1E-18
 .MODEL NEN NMOS KP=200U VTO=0.5 IS=1E-18
 .ENDS
-* END MODEL LMV797*
-*File: LMV821.MOD
+* END MODEL LMV796*
+*File: LMV797.MOD
 *
-*//////////////////////////////////////////////////////////////////////
-* (C) National Semiconductor, Inc.
-* Models developed and under copyright by:
-* National Semiconductor, Inc.  
-*
+* BEGIN MODEL LMV797
 */////////////////////////////////////////////////////////////////////
-* Legal Notice: This material is intended for free software support.
-* The file may be copied, and distributed; however, reselling the 
-*  material is illegal
-*
+*Rev.a August-2006
+*//////////////////////////////////////////////////////////////////////
+* (C) National Semiconductor, Corporation.
+* Models developed and under copyright by:
+* National Semiconductor, Corporation.  
+*/////////////////////////////////////////////////////////////////////
+* Legal Notice:  
+* The model may be copied, and distributed without any modifications;
+* however, reselling or licensing the material is illegal.
+* We reserve the right to make changes to the model without prior notice. 
+* Pspice Models are provided "AS IS, WITH NO WARRANTY OF ANY KIND" 
 *////////////////////////////////////////////////////////////////////
-* For ordering or technical information on these models, contact:
-* National Semiconductor's Customer Response Center
-*                 7:00 A.M.--7:00 P.M.  U.S. Central Time
-*                                (800) 272-9959
-* For Applications support, contact the Internet address:
-*  amps-apps@galaxy.nsc.com
-*/////////////////////////////////////////
-*LMV821  Low Voltage  Rail-to-Rail Output  5MHz Op Amp
-* MODEL FORMAT: PSPICE
-* Rev:  03/20/98 -- ABG 
-*/////////////////////////////////////////
-* Connections       non-inverting input
-*                   |  inverting input
-*                   |  |  positive power supply 
-*                   |  |  |  negative power supply 
-*                   |  |  |  |  output 
-*                   |  |  |  |  |
+*MODEL FEATURES INCLUDE OUTPUT SWING, OUTPUT CURRENT THRU
+*THE SUPPLY RAILS, OUTPUT SWING VS IO, OUTPUT CURRENT LIMIT,
+*OPEN LOOP GAIN AND PHASE, SLEW RATE, COMMON MODE REJECTION
+*WITH FREQ EFFECTS, POWER SUPPLY REJECTION WITH FREQ EFFECTS,
+*INPUT VOLTAGE NOISE WITH 1/F, INPUT CURRENT NOISE, INPUT
+*CAPACITANCE, INPUT BIAS CURRENT, INPUT COMMON MODE RANGE,
+*INPUT OFFSET, HIGH CLOAD EFFECTS, QUIESCENT CURRENT, AND
+*QUISCENT CURRENT VS VOLTAGE.
+*/////////////////////////////////////
+* Note:  Model is for single device only and simulated
+*        supply current is 1/2 of the total device current.
+*//////////////////////////////
+*MODEL TEMP RANGE IS -55 TO +125 DEG C.
+*NOTE THAT MODEL IS FUNCTIONAL OVER THIS RANGE BUT NOT ALL
+*PARAMETERS TRACK THOSE OF THE REAL PART.
+*//////////////////////////////
+* PINOUT ORDER +IN -IN +V -V OUT
+* PINOUT ORDER  3   4   6  2  1
 
 ********************************************************************************
 ***                                                                          ***
-*** Starting Transient analysis at 21:22                                     ***
+*** Starting Transient analysis at 17:34                                     ***
 ***                                                                          ***
 *** Analysis card: .tran 3m                                                  ***
 ***                                                                          ***
@@ -299,7 +303,7 @@ Total iterations = 1873
 Transient iterations = 734
 Transient timepoints = 368
 Accepted timepoints = 368
-Total analysis time = 0.172
+Total analysis time = 0.156
 Transient time = 0
 Matrix reordering time = 0
 L-U decomposition time = 0
@@ -307,7 +311,7 @@ Matrix solve time = 0
 Load time = 0
 Transient L-U decomp time = 0
 Transient solve time = 0
-Circuit build time = 0.015
+Circuit build time = 0.016
 Simulator initialise time = 0
 Data write time = 0
 Convergence test time = 0
@@ -325,7 +329,7 @@ Number of write buffer faults = 0
 
 ********************************************************************************
 ***                                                                          ***
-*** Starting AC analysis at 21:22                                            ***
+*** Starting AC analysis at 17:34                                            ***
 ***                                                                          ***
 *** Analysis card: .ac dec 100 1 500k                                        ***
 ***                                                                          ***
@@ -396,7 +400,7 @@ Total iterations = 1139
 Transient iterations = 0
 Transient timepoints = 0
 Accepted timepoints = 0
-Total analysis time = 0.234
+Total analysis time = 0.14
 Transient time = 0
 Matrix reordering time = 0
 L-U decomposition time = 0
@@ -404,7 +408,7 @@ Matrix solve time = 0
 Load time = 0
 Transient L-U decomp time = 0
 Transient solve time = 0
-Circuit build time = 0.031
+Circuit build time = 0.016
 Simulator initialise time = 0
 Data write time = 0
 Convergence test time = 0
@@ -424,5 +428,5 @@ Run statistics
 ==============
 
 Netlist read in time = 0
-Total run time = 0.593 seconds
-Analysis concluded 14.03.2020 21:22
+Total run time = 0.453 seconds
+Analysis concluded 15.03.2020 17:34

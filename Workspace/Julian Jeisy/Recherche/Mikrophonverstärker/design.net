@@ -13,12 +13,12 @@ R5 R6_N 0 100k
 R6 3V3 R6_N 100k
 R7 X1_inn C4_P 4.7k
 R8 R8_P X1_inn 330k
-I1 R1_N 0 360u AC 160n 0 Sin(0 160n 1k 0 0)
+I1 R1_N 0 160n AC 160n 0 Sin(0 160n 1k 0 0)
 C1 R1_N X2_inn 1u   
 C2 C2_P X2_inn 100p   
 C3 VCC/2 0 2.2u   
 C4 C4_P C2_P 1u   
-C5 R6_N R8_P 100n   
+C5 R6_N R8_P 1u   
 .GRAPH R6_N axisType="owngrid" persistence=-1 curveLabel="VOUT" analysis="tran|ac|dc" xLog="lin" yLog="lin" yMin=0 yMax=3.5  nowarn=true disabled=false PROBEREF=Probe1  
 .GRAPH C1#P axisType="auto" persistence=-1 curveLabel="Iin" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true disabled=false 
 .GRAPH C2_P axisType="owngrid" persistence=-1 curveLabel="op1" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe3  
