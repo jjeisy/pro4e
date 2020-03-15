@@ -1,6 +1,6 @@
 *************************************************************************************************************************
 ***                                                                                                                   ***
-*** SIMetrix/SIMPLIS Elite Version 8.30f (x64) - 04.03.2020 20:43                                                     ***
+*** SIMetrix/SIMPLIS Elite Version 8.30f (x64) - 14.03.2020 21:22                                                     ***
 *** Platform: Windows 7                                                                                               ***
 *** Architecture: x64                                                                                                 ***
 *** Serial Number: SX805659                                                                                           ***
@@ -22,30 +22,31 @@
 .options icres=0.002
 .options inhibitAttoISource=1
 #SIMETRIX
-X1 R3_N R7_P VCC 0 X1_out LMV796 pinnames: inp inn vsp vsn out
-V1 V1_P 0 3.3
-X2 R3_N C1_N VCC 0 X2_out LMV796 pinnames: inp inn vsp vsn out
+X1 VCC/2 X1_inn VCC 0 R8_P LMV796 pinnames: inp inn vsp vsn out
+V1 3V3 0 3.3
+X2 VCC/2 X2_inn VCC 0 C2_P LMV796 pinnames: inp inn vsp vsn out
 V2 VCC 0 5
 R1 VCC R1_N 5.6k
-V3 VIN 0 100u AC 1 0 Sin(0 360u 1k 0 0)
-R2 X2_out C1_N 68k
-R3 VCC R3_N 100k
-R4 R3_N 0 100k
-R5 VOUT 0 100k
-R6 V1_P VOUT 100k
-R7 R7_P X2_out 10k
-R9 X1_out R7_P 33k
-I1 R1_N 0 16u AC 1 0 Sin(0 160n 1k 0 0)
-C1 VIN C1_N 2.2u   
-C2 X2_out C1_N 33p   
-C3 R3_N 0 2.2u   
-C4 VOUT X1_out 2.2u   
-C5 X1_out R7_P 100p   
-.GRAPH VOUT axisType="owngrid" persistence=-1 curveLabel="VOUT" analysis="tran|ac|dc" xLog="lin" yLog="lin" yMin=0 yMax=3.5  nowarn=true disabled=false PROBEREF=Probe1  
-.GRAPH VIN curveLabel= VIN nowarn=true ylog=auto xlog=auto analysis=tran|ac|dc disabled=false PROBEREF=Probe2  
-.GRAPH X2_out axisType="owngrid" persistence=-1 curveLabel="VMID" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe3  
-.tran 0 102m 100m 100u
-*.ac dec 100 1 500k
+V3 V3_P 0 100u AC 1 0 Sin(0 360u 10k 0 0)
+R2 C2_P X2_inn 68k
+R3 VCC VCC/2 100k
+R4 VCC/2 0 100k
+R5 R6_N 0 100k
+R6 3V3 R6_N 100k
+R7 X1_inn C4_P 4.7k
+R8 R8_P X1_inn 330k
+I1 R1_N 0 360u AC 160n 0 Sin(0 160n 1k 0 0)
+C1 R1_N X2_inn 1u   
+C2 C2_P X2_inn 100p   
+C3 VCC/2 0 2.2u   
+C4 C4_P C2_P 1u   
+C5 R6_N R8_P 100n   
+.GRAPH R6_N axisType="owngrid" persistence=-1 curveLabel="VOUT" analysis="tran|ac|dc" xLog="lin" yLog="lin" yMin=0 yMax=3.5  nowarn=true disabled=false PROBEREF=Probe1  
+.GRAPH C1#P axisType="auto" persistence=-1 curveLabel="Iin" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true disabled=false 
+.GRAPH C2_P axisType="owngrid" persistence=-1 curveLabel="op1" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe3  
+.GRAPH R8_P axisType="owngrid" persistence=-1 curveLabel="op2" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe4  
+.tran 3m
+.ac dec 100 1 500k
 *.tf freq dec 25 1k 1000000 V=VOUT VN=VIN
 .SUBCKT LMV796 3 4 6 2 1
 Q12 7 8 9 QP
@@ -227,9 +228,9 @@ R142 5 6 1E6
 
 ********************************************************************************
 ***                                                                          ***
-*** Starting Transient analysis at 20:43                                     ***
+*** Starting Transient analysis at 21:22                                     ***
 ***                                                                          ***
-*** Analysis card: .tran 0 102m 100m 100u                                    ***
+*** Analysis card: .tran 3m                                                  ***
 ***                                                                          ***
 ********************************************************************************
 ********************************************************************************
@@ -294,11 +295,11 @@ vaf          40           40           0
 
 Nominal temperature = 27
 Operating temperature = 27
-Total iterations = 5777
-Transient iterations = 5500
-Transient timepoints = 1287
-Accepted timepoints = 1278
-Total analysis time = 0.656
+Total iterations = 1873
+Transient iterations = 734
+Transient timepoints = 368
+Accepted timepoints = 368
+Total analysis time = 0.172
 Transient time = 0
 Matrix reordering time = 0
 L-U decomposition time = 0
@@ -314,17 +315,114 @@ LTE time = 0
 JI2 Iterations = 100
 Diag. GMIN stepping iterations = 0
 Junc. GMIN stepping iterations = 0
-Source stepping iterations = 177
+Source stepping iterations = 1039
 PTA iterations = 0
-Number of matrix fill ins = -144
-Number of initial matrix elements = 752
-Circuit equations = 196
+Number of matrix fill ins = -147
+Number of initial matrix elements = 754
+Circuit equations = 197
+State vector size = 2144
+Number of write buffer faults = 0
+
+********************************************************************************
+***                                                                          ***
+*** Starting AC analysis at 21:22                                            ***
+***                                                                          ***
+*** Analysis card: .ac dec 100 1 500k                                        ***
+***                                                                          ***
+********************************************************************************
+********************************************************************************
+***                                                                          ***
+***                            Simulation Options                            ***
+***                                                                          ***
+********************************************************************************
+RELTOL                    0.001
+ABSTOL                    1e-12
+VNTOL                     1e-06
+POINTTOL                  0.001
+TEMPERATURE               27C
+GMIN                      1e-12
+Matrix Solver             UF KLU Version 1.1
+
+
+
+********************************************************************************
+***                                                                          ***
+***                             Device parameters                            ***
+***                                                                          ***
+********************************************************************************
+Model parameters for devices of type MOS1
+=========================================
+Model:       X1.MIP       X1.NEN       X1.NSW       X1.PEN       X1.PSW       
+
+is           10f          1a           1a           1a           1a           
+kp           600u         200u         200u         200u         200u         
+vt0          -700m        500m         7.5          -500m        -7.5         
+
+Model:       X2.MIP       X2.NEN       X2.NSW       X2.PEN       X2.PSW       
+
+is           10f          1a           1a           1a           1a           
+kp           600u         200u         200u         200u         200u         
+vt0          -700m        500m         7.5          -500m        -7.5         
+
+
+Model parameters for devices of type Diode
+==========================================
+Model:       X1.DD        X1.DIN       X1.DVN       X2.DD        X2.DIN       
+
+kf           0            80a          500a         0            80a          
+
+Model:       X2.DVN       
+
+kf           500a         
+
+
+Model parameters for devices of type BJT
+========================================
+Model:       X1.QN        X1.QON       X1.QOP       X1.QP        X2.QN        
+
+vaf          0            40           40           0            0            
+
+Model:       X2.QON       X2.QOP       X2.QP        
+
+vaf          40           40           0            
+
+
+Analysis statistics
+===================
+
+Nominal temperature = 27
+Operating temperature = 27
+Total iterations = 1139
+Transient iterations = 0
+Transient timepoints = 0
+Accepted timepoints = 0
+Total analysis time = 0.234
+Transient time = 0
+Matrix reordering time = 0
+L-U decomposition time = 0
+Matrix solve time = 0
+Load time = 0
+Transient L-U decomp time = 0
+Transient solve time = 0
+Circuit build time = 0.031
+Simulator initialise time = 0
+Data write time = 0
+Convergence test time = 0
+LTE time = 0
+JI2 Iterations = 100
+Diag. GMIN stepping iterations = 0
+Junc. GMIN stepping iterations = 0
+Source stepping iterations = 1039
+PTA iterations = 0
+Number of matrix fill ins = -153
+Number of initial matrix elements = 754
+Circuit equations = 197
 State vector size = 2144
 Number of write buffer faults = 0
 
 Run statistics
 ==============
 
-Netlist read in time = 0.031
-Total run time = 0.733 seconds
-Analysis concluded 04.03.2020 20:43
+Netlist read in time = 0
+Total run time = 0.593 seconds
+Analysis concluded 14.03.2020 21:22
