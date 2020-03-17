@@ -4,7 +4,7 @@ EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 1
+Sheet 1 2
 Title ""
 Date ""
 Rev ""
@@ -726,4 +726,10 @@ Wire Wire Line
 	6250 2350 6250 2300
 Wire Wire Line
 	5300 3050 6250 3050
+$Sheet
+S 9000 1000 1100 650 
+U 5E75368F
+F0 "BluetoothModu" 50
+F1 "BluetoothModul.sch" 50
+$EndSheet
 $EndSCHEMATC
