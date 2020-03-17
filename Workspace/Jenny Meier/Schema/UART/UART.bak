@@ -427,12 +427,4 @@ Wire Wire Line
 	1700 3400 1700 3150
 Wire Wire Line
 	1700 3150 1650 3150
-Text HLabel 5550 2150 2    50   Input ~ 0
-MC_TXD
-Text HLabel 5550 2250 2    50   Input ~ 0
-MC_RXD
-Wire Wire Line
-	5300 2150 5550 2150
-Wire Wire Line
-	5550 2250 5300 2250
 $EndSCHEMATC
