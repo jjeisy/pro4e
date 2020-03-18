@@ -1,6 +1,6 @@
 *************************************************************************************************************************
 ***                                                                                                                   ***
-*** SIMetrix/SIMPLIS Elite Version 8.30f (x64) - 15.03.2020 17:34                                                     ***
+*** SIMetrix/SIMPLIS Elite Version 8.30f (x64) - 18.03.2020 15:25                                                     ***
 *** Platform: Windows 7                                                                                               ***
 *** Architecture: x64                                                                                                 ***
 *** Serial Number: SX805659                                                                                           ***
@@ -28,7 +28,7 @@ X2 VCC/2 X2_inn VCC 0 C2_P LMV796 pinnames: inp inn vsp vsn out
 V2 VCC 0 5
 R1 VCC R1_N 5.6k
 V3 V3_P 0 100u AC 1 0 Sin(0 360u 10k 0 0)
-R2 C2_P X2_inn 68k
+R2 C2_P X2_inn 100k
 R3 VCC VCC/2 100k
 R4 VCC/2 0 100k
 R5 R6_N 0 100k
@@ -36,12 +36,12 @@ R6 3V3 R6_N 100k
 R7 X1_inn C4_P 4.7k
 R8 R8_P X1_inn 330k
 I1 R1_N 0 160n AC 160n 0 Sin(0 160n 1k 0 0)
-C1 R1_N X2_inn 1u   
-C2 C2_P X2_inn 100p   
+C1 R1_N X2_inn 100n   
+C2 C2_P X2_inn 47p   
 C3 VCC/2 0 2.2u   
-C4 C4_P C2_P 1u   
+C4 C4_P C2_P 100n   
 C5 R6_N R8_P 1u   
-.GRAPH R6_N axisType="owngrid" persistence=-1 curveLabel="VOUT" analysis="tran|ac|dc" xLog="lin" yLog="lin" yMin=0 yMax=3.5  nowarn=true disabled=false PROBEREF=Probe1  
+.GRAPH R6_N axisType="owngrid" persistence=-1 curveLabel="VOUT" analysis="tran|ac|dc" xLog="lin" yLog="lin" yMin=0 yMax=3  nowarn=true disabled=false PROBEREF=Probe1  
 .GRAPH C1#P axisType="auto" persistence=-1 curveLabel="Iin" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true disabled=false 
 .GRAPH C2_P axisType="owngrid" persistence=-1 curveLabel="op1" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe3  
 .GRAPH R8_P axisType="owngrid" persistence=-1 curveLabel="op2" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true disabled=false PROBEREF=Probe4  
@@ -232,7 +232,7 @@ R142 5 6 1E6
 
 ********************************************************************************
 ***                                                                          ***
-*** Starting Transient analysis at 17:34                                     ***
+*** Starting Transient analysis at 15:25                                     ***
 ***                                                                          ***
 *** Analysis card: .tran 3m                                                  ***
 ***                                                                          ***
@@ -299,10 +299,10 @@ vaf          40           40           0
 
 Nominal temperature = 27
 Operating temperature = 27
-Total iterations = 1873
-Transient iterations = 734
-Transient timepoints = 368
-Accepted timepoints = 368
+Total iterations = 998
+Transient iterations = 738
+Transient timepoints = 370
+Accepted timepoints = 369
 Total analysis time = 0.156
 Transient time = 0
 Matrix reordering time = 0
@@ -311,7 +311,7 @@ Matrix solve time = 0
 Load time = 0
 Transient L-U decomp time = 0
 Transient solve time = 0
-Circuit build time = 0.016
+Circuit build time = 0.015
 Simulator initialise time = 0
 Data write time = 0
 Convergence test time = 0
@@ -319,7 +319,7 @@ LTE time = 0
 JI2 Iterations = 100
 Diag. GMIN stepping iterations = 0
 Junc. GMIN stepping iterations = 0
-Source stepping iterations = 1039
+Source stepping iterations = 160
 PTA iterations = 0
 Number of matrix fill ins = -147
 Number of initial matrix elements = 754
@@ -329,7 +329,7 @@ Number of write buffer faults = 0
 
 ********************************************************************************
 ***                                                                          ***
-*** Starting AC analysis at 17:34                                            ***
+*** Starting AC analysis at 15:25                                            ***
 ***                                                                          ***
 *** Analysis card: .ac dec 100 1 500k                                        ***
 ***                                                                          ***
@@ -396,11 +396,11 @@ vaf          40           40           0
 
 Nominal temperature = 27
 Operating temperature = 27
-Total iterations = 1139
+Total iterations = 260
 Transient iterations = 0
 Transient timepoints = 0
 Accepted timepoints = 0
-Total analysis time = 0.14
+Total analysis time = 0.11
 Transient time = 0
 Matrix reordering time = 0
 L-U decomposition time = 0
@@ -408,7 +408,7 @@ Matrix solve time = 0
 Load time = 0
 Transient L-U decomp time = 0
 Transient solve time = 0
-Circuit build time = 0.016
+Circuit build time = 0.015
 Simulator initialise time = 0
 Data write time = 0
 Convergence test time = 0
@@ -416,9 +416,9 @@ LTE time = 0
 JI2 Iterations = 100
 Diag. GMIN stepping iterations = 0
 Junc. GMIN stepping iterations = 0
-Source stepping iterations = 1039
+Source stepping iterations = 160
 PTA iterations = 0
-Number of matrix fill ins = -153
+Number of matrix fill ins = -145
 Number of initial matrix elements = 754
 Circuit equations = 197
 State vector size = 2144
@@ -428,5 +428,5 @@ Run statistics
 ==============
 
 Netlist read in time = 0
-Total run time = 0.453 seconds
-Analysis concluded 15.03.2020 17:34
+Total run time = 0.561 seconds
+Analysis concluded 18.03.2020 15:25
